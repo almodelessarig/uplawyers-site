@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /thank-you.html
+
+Sitemap: https://uplawyers.vercel.app/sitemap.xml
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Disallow: /thank-you.html
+Host: https://uplawyers.vercel.app
