@@ -119,6 +119,10 @@ p{color:var(--text-sec);line-height:1.7}
   background:var(--light);border:1px solid #E5E7EB;padding:8px 16px;border-radius:10px;
 }
 .hero-cta-note{color:var(--text-sec);font-size:12px;margin-top:10px}
+.hero-pain{color:var(--text);font-size:15px;line-height:1.5;margin:0 0 14px;max-width:600px;opacity:.85}
+.hero-trust{color:var(--primary);font-size:13px;font-weight:600;margin:0 0 14px;line-height:1.5;font-family:'Manrope','Inter',sans-serif;max-width:600px}
+.hero-trust-sep{color:var(--accent);margin:0 6px;font-weight:700}
+.hero-cta-micro{color:var(--text-sec);font-size:13px;margin-top:8px;font-weight:500}
 
 /* Hero right card — hidden on mobile */
 .hero-right{display:none}
@@ -153,6 +157,9 @@ p{color:var(--text-sec);line-height:1.7}
   .hero-cta-text{font-size:18px;margin-bottom:10px}
   .hero-cta-row{flex-direction:row;align-items:center;gap:16px}
   .hero-cta-note{margin-top:8px}
+  .hero-pain{font-size:16px;margin-bottom:14px}
+  .hero-trust{font-size:14px;margin-bottom:16px}
+  .hero-cta-micro{font-size:13px;margin-top:10px}
   .hero-card{padding:24px 20px}
   .hero-card-stats{gap:14px}
   .hero-card-stat-value{font-size:24px}
@@ -169,6 +176,9 @@ p{color:var(--text-sec);line-height:1.7}
   .hero-bullets{margin-bottom:16px}
   .hero-bullets li{font-size:15px;margin-bottom:7px}
   .hero-cta-text{font-size:20px;margin-bottom:12px}
+  .hero-pain{font-size:17px;margin-bottom:16px}
+  .hero-trust{font-size:14px;margin-bottom:18px}
+  .hero-cta-micro{font-size:14px;margin-top:10px}
   .hero-card{padding:28px 24px}
   .hero-card-stat-value{font-size:28px}
   .hero-card-stat-label{font-size:14px}
@@ -181,6 +191,8 @@ p{color:var(--text-sec);line-height:1.7}
   .hero-subtitle{font-size:17px}
   .hero-bullets li{font-size:16px}
   .hero-cta-text{font-size:22px}
+  .hero-pain{font-size:18px}
+  .hero-trust{font-size:15px}
   .hero-card{padding:32px 28px}
   .hero-card-stat-value{font-size:32px}
 }
