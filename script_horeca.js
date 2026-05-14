@@ -138,7 +138,7 @@
       if (!valid) return;
 
       console.log('HoReCa Quiz submitted:', { answers: answers, name: name.value.trim(), phone: phone.value.trim() });
-      window.location.href = 'thank_horeca.html';
+      window.location.href = '/thank_horeca';
     });
   }
 
@@ -180,7 +180,7 @@
       if (!valid) return;
 
       console.log('HoReCa CTA form:', { name: nameF.value.trim(), phone: phoneF.value.trim(), type: ctaForm.querySelector('[name="venue_type"]').value });
-      window.location.href = 'thank_horeca.html';
+      window.location.href = '/thank_horeca';
     });
   }
 

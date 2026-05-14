@@ -113,34 +113,71 @@ p{color:var(--color-text-muted);line-height:1.7}
 }
 .h-hero-cta-note{color:var(--color-text-muted);font-size:11px;margin-top:8px}
 
-/* Hero right — desktop only */
+/* Hero right card — desktop only */
 .h-hero-right{display:none}
-.h-hero-visual{
-  width:100%;aspect-ratio:1;max-width:340px;
-  background:var(--color-bg-light);border-radius:24px;
-  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+.h-hero-card{
+  background:var(--color-bg-light);border:1px solid #E5E7EB;border-radius:20px;
+  padding:32px 28px;
 }
-.h-hero-visual svg{width:60%;height:60%;opacity:.15}
+.h-hero-card-stats{display:flex;flex-direction:column;gap:20px}
+.h-hero-card-stat{}
+.h-hero-card-value{
+  font-family:var(--font-heading);font-weight:800;font-size:28px;
+  color:var(--color-primary);line-height:1;margin-bottom:4px;
+}
+.h-hero-card-label{font-size:14px;color:var(--color-text-muted);font-weight:500}
+.h-hero-card-divider{height:1px;background:#E5E7EB;margin:24px 0}
+.h-hero-card-quote{
+  font-size:15px;font-style:italic;color:var(--color-text);line-height:1.6;
+  margin-bottom:8px;padding-left:16px;border-left:3px solid var(--color-gold);
+}
+.h-hero-card-author{font-size:13px;color:var(--color-text-muted);padding-left:16px}
 
 @media(min-width:769px){
-  .h-hero{padding:48px 0 56px}
-  .h-hero .container{display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start}
-  .h-hero-right{display:flex;align-items:center;justify-content:center}
-  .h-hero h1{font-size:40px;margin-bottom:14px}
-  .h-hero-subtitle{font-size:16px;margin-bottom:20px}
-  .h-hero-bullets{margin-bottom:18px}
-  .h-hero-bullets li{font-size:15px;margin-bottom:8px}
-  .h-hero-trust{margin-bottom:20px}
-  .h-hero-trust-item{font-size:13px;padding:6px 12px}
-  .h-hero-cta-text{font-size:19px;margin-bottom:14px}
-  .h-hero-cta-note{font-size:12px}
+  .h-hero{padding:36px 0 40px}
+  .h-hero .container{display:grid;grid-template-columns:1fr 280px;gap:32px;align-items:start}
+  .h-hero-right{display:block}
+  .h-hero-badge{margin-bottom:10px}
+  .h-hero h1{font-size:28px;margin-bottom:10px}
+  .h-hero-subtitle{font-size:14px;margin-bottom:12px}
+  .h-hero-bullets{margin-bottom:12px}
+  .h-hero-bullets li{font-size:13px;margin-bottom:5px}
+  .h-hero-trust{margin-bottom:12px}
+  .h-hero-trust-item{font-size:12px;padding:4px 10px}
+  .h-hero-cta-text{font-size:17px;margin-bottom:10px}
+  .h-hero-cta-note{font-size:11px;margin-top:8px}
+  .h-hero-card{padding:24px 20px}
+  .h-hero-card-stats{gap:14px}
+  .h-hero-card-value{font-size:24px}
+  .h-hero-card-label{font-size:13px}
+  .h-hero-card-divider{margin:16px 0}
+  .h-hero-card-quote{font-size:14px}
+  .h-hero-card-author{font-size:12px}
 }
 @media(min-width:1100px){
-  .h-hero .container{grid-template-columns:1fr 380px;gap:56px}
-  .h-hero h1{font-size:48px}
-  .h-hero-subtitle{font-size:17px}
-  .h-hero-bullets li{font-size:16px}
+  .h-hero{padding:40px 0 48px}
+  .h-hero .container{grid-template-columns:1fr 320px;gap:40px}
+  .h-hero h1{font-size:34px;margin-bottom:12px}
+  .h-hero-subtitle{font-size:15px;margin-bottom:14px}
+  .h-hero-bullets{margin-bottom:14px}
+  .h-hero-bullets li{font-size:14px;margin-bottom:6px}
+  .h-hero-trust{margin-bottom:14px}
+  .h-hero-trust-item{font-size:13px;padding:5px 12px}
+  .h-hero-cta-text{font-size:19px;margin-bottom:12px}
+  .h-hero-card{padding:28px 24px}
+  .h-hero-card-value{font-size:28px}
+  .h-hero-card-label{font-size:14px}
+  .h-hero-card-divider{margin:20px 0}
+  .h-hero-card-quote{font-size:15px}
+}
+@media(min-width:1400px){
+  .h-hero .container{grid-template-columns:1fr 360px;gap:48px}
+  .h-hero h1{font-size:40px}
+  .h-hero-subtitle{font-size:16px}
+  .h-hero-bullets li{font-size:15px}
   .h-hero-cta-text{font-size:21px}
+  .h-hero-card{padding:32px 28px}
+  .h-hero-card-value{font-size:32px}
 }
 
 /* ===== SECTIONS ===== */
@@ -409,6 +446,54 @@ p{color:var(--color-text-muted);line-height:1.7}
 }
 @media(min-width:1024px){
   .h-ty-services-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* TY Why list */
+.h-ty-why-list{max-width:760px;margin:0 auto}
+.h-ty-why-item{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid #E5E7EB}
+.h-ty-why-item:last-child{border-bottom:none}
+.h-ty-why-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.h-ty-why-item h3{font-size:16px;margin-bottom:4px}
+.h-ty-why-item p{font-size:14px;color:var(--color-text-muted);line-height:1.6}
+
+/* TY Detail blocks */
+.h-ty-detail-block{
+  max-width:760px;margin:0 auto 40px;padding:28px 24px;
+  background:var(--color-bg);border:1px solid #E5E7EB;border-radius:var(--radius-card);
+}
+.h-ty-detail-block:last-child{margin-bottom:0}
+.h-ty-detail-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.h-ty-detail-icon{font-size:32px;flex-shrink:0}
+.h-ty-detail-header h3{font-size:18px;margin-bottom:4px}
+.h-ty-detail-header p{font-size:14px;color:var(--color-text-muted)}
+.h-ty-detail-body{font-size:14px;color:var(--color-text);line-height:1.8}
+.h-ty-detail-body p{color:var(--color-text);margin-bottom:10px}
+.h-ty-detail-body ul{padding-left:20px;list-style:disc;margin-bottom:12px}
+.h-ty-detail-body ul li{margin-bottom:6px;color:var(--color-text);font-size:14px;line-height:1.6}
+.h-ty-example{
+  background:var(--color-bg-light);border-left:3px solid var(--color-gold);
+  padding:14px 16px;border-radius:0 8px 8px 0;margin:14px 0;
+  font-size:14px;color:var(--color-text);line-height:1.7;
+}
+.h-ty-example strong{color:var(--color-primary)}
+
+/* TY Cases grid */
+.h-ty-cases-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:760px;margin:0 auto}
+.h-ty-case-card{
+  background:var(--color-bg);border:1px solid #E5E7EB;border-radius:var(--radius-card);padding:24px;
+}
+
+/* TY FAQ */
+.h-ty-faq{max-width:760px;margin:0 auto}
+.h-ty-faq-item{border-bottom:1px solid #E5E7EB;padding:20px 0}
+.h-ty-faq-item:first-child{padding-top:0}
+.h-ty-faq-item:last-child{border-bottom:none}
+.h-ty-faq-q{font-size:16px;font-weight:700;color:var(--color-primary);margin-bottom:8px;font-family:var(--font-heading)}
+.h-ty-faq-a{font-size:14px;color:var(--color-text-muted);line-height:1.7}
+
+@media(min-width:769px){
+  .h-ty-detail-block{padding:36px 32px}
+  .h-ty-cases-grid{grid-template-columns:repeat(2,1fr)}
 }
 
 /* ===== UTILITIES ===== */

@@ -140,7 +140,7 @@
       };
       console.log('Quiz submitted:', formData);
 
-      window.location.href = 'thank-you.html';
+      window.location.href = '/thank-you';
     });
   }
 
@@ -197,7 +197,7 @@
         clinic_type: ctaForm.querySelector('[name="clinic_type"]').value,
       });
 
-      window.location.href = 'thank-you.html';
+      window.location.href = '/thank-you';
     });
   }
 
