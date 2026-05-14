@@ -123,6 +123,7 @@ p{color:var(--text-sec);line-height:1.7}
 .hero-trust{color:var(--primary);font-size:13px;font-weight:600;margin:0 0 14px;line-height:1.5;font-family:'Manrope','Inter',sans-serif;max-width:600px}
 .hero-trust-sep{color:var(--accent);margin:0 6px;font-weight:700}
 .hero-cta-micro{color:var(--text-sec);font-size:13px;margin-top:8px;font-weight:500}
+.hero-bullets-label{color:var(--primary);font-weight:700;font-size:15px;margin:0 0 8px;font-family:'Manrope','Inter',sans-serif}
 
 /* Hero right card — hidden on mobile */
 .hero-right{display:none}
@@ -160,6 +161,7 @@ p{color:var(--text-sec);line-height:1.7}
   .hero-pain{font-size:16px;margin-bottom:14px}
   .hero-trust{font-size:14px;margin-bottom:16px}
   .hero-cta-micro{font-size:13px;margin-top:10px}
+  .hero-bullets-label{font-size:16px;margin-bottom:8px}
   .hero-card{padding:24px 20px}
   .hero-card-stats{gap:14px}
   .hero-card-stat-value{font-size:24px}
@@ -179,6 +181,7 @@ p{color:var(--text-sec);line-height:1.7}
   .hero-pain{font-size:17px;margin-bottom:16px}
   .hero-trust{font-size:14px;margin-bottom:18px}
   .hero-cta-micro{font-size:14px;margin-top:10px}
+  .hero-bullets-label{font-size:17px;margin-bottom:10px}
   .hero-card{padding:28px 24px}
   .hero-card-stat-value{font-size:28px}
   .hero-card-stat-label{font-size:14px}
