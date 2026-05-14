@@ -1,6 +1,7 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const BITRIX_WEBHOOK_URL = process.env.BITRIX_WEBHOOK_URL;
+const BITRIX_DEAL_CATEGORY_ID = 8;
 
 function escapeHtml(s) {
   return String(s == null ? '' : s)
@@ -63,30 +64,77 @@ async function sendTelegram(message) {
   return j;
 }
 
+async function bitrixCall(method, params) {
+  const base = BITRIX_WEBHOOK_URL.replace(/\/$/, '');
+  const r = await fetch(`${base}/${method}.json`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  const j = await r.json().catch(() => null);
+  if (!j || j.error) throw new Error(`${method}: ${JSON.stringify(j)}`);
+  return j.result;
+}
+
+async function findOrCreateContact({ name, phone }) {
+  try {
+    const found = await bitrixCall('crm.duplicate.findbycomm', {
+      type: 'PHONE',
+      values: [phone],
+    });
+    if (found && Array.isArray(found.CONTACT) && found.CONTACT.length) {
+      return found.CONTACT[0];
+    }
+  } catch (e) {
+    console.warn(JSON.stringify({ event: 'bitrix_dedup_failed', err: String(e) }));
+  }
+
+  const parts = name.split(/\s+/).filter(Boolean);
+  const firstName = parts[0] || name;
+  const lastName = parts.slice(1).join(' ') || '';
+
+  return await bitrixCall('crm.contact.add', {
+    fields: {
+      NAME: firstName,
+      LAST_NAME: lastName,
+      PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
+      SOURCE_ID: 'WEB',
+      OPENED: 'Y',
+    },
+  });
+}
+
 async function sendBitrix({ name, phone, formType, pageUrl, comments, utm }) {
   if (!BITRIX_WEBHOOK_URL) return null;
-  const base = BITRIX_WEBHOOK_URL.replace(/\/$/, '');
-  const url = `${base}/crm.lead.add.json`;
+
+  let contactId = null;
+  try {
+    contactId = await findOrCreateContact({ name, phone });
+  } catch (e) {
+    console.error(JSON.stringify({ event: 'bitrix_contact_failed', err: String(e) }));
+  }
+
   const fields = {
     TITLE: `Заявка с сайта — ${formType}`,
-    NAME: name,
-    PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
+    CATEGORY_ID: BITRIX_DEAL_CATEGORY_ID,
+    SOURCE_ID: 'WEB',
     SOURCE_DESCRIPTION: pageUrl || 'up-lawyers.kz',
-    COMMENTS: comments,
+    COMMENTS: contactId ? comments : `Имя: ${name}\nТелефон: ${phone}\n\n${comments}`,
+    OPENED: 'Y',
     UTM_SOURCE: utm.source || '',
     UTM_MEDIUM: utm.medium || '',
     UTM_CAMPAIGN: utm.campaign || '',
     UTM_CONTENT: utm.content || '',
     UTM_TERM: utm.term || '',
   };
-  const r = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fields, params: { REGISTER_SONET_EVENT: 'Y' } }),
+  if (contactId) fields.CONTACT_ID = contactId;
+
+  const dealId = await bitrixCall('crm.deal.add', {
+    fields,
+    params: { REGISTER_SONET_EVENT: 'Y' },
   });
-  const j = await r.json().catch(() => null);
-  if (!j || j.error) throw new Error('bitrix: ' + JSON.stringify(j));
-  return j;
+
+  return { contactId, dealId };
 }
 
 export default async function handler(req, res) {
