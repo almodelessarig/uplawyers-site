@@ -2,6 +2,33 @@
 (function () {
   'use strict';
 
+  function getUtmParams() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      utm_source: p.get('utm_source') || '',
+      utm_medium: p.get('utm_medium') || '',
+      utm_campaign: p.get('utm_campaign') || '',
+      utm_content: p.get('utm_content') || '',
+      utm_term: p.get('utm_term') || '',
+    };
+  }
+
+  function sendLead(payload, redirectTo) {
+    fetch('/api/send-telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({}, payload, getUtmParams(), {
+        page_url: window.location.href,
+        referrer: document.referrer || '',
+      })),
+      keepalive: true,
+    }).catch(function (err) {
+      console.error('Lead send failed:', err);
+    }).finally(function () {
+      window.location.href = redirectTo;
+    });
+  }
+
   const quizData = [
     {
       label: 'Шаг 1 из 3',
@@ -132,15 +159,16 @@
       }
       if (!valid) return;
 
-      // Collect all data (would be sent to backend in production)
-      var formData = {
-        answers: answers,
+      var submitBtn = quizForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправка...'; }
+
+      sendLead({
+        form_type: 'Квиз — Медицина',
         name: name.value.trim(),
         phone: phone.value.trim(),
-      };
-      console.log('Quiz submitted:', formData);
-
-      window.location.href = '/thank-you';
+        answers: answers.slice(),
+        up_website: (quizForm.querySelector('[name="up_website"]') || {}).value || '',
+      }, '/thank-you');
     });
   }
 
@@ -191,13 +219,16 @@
       }
       if (!valid) return;
 
-      console.log('CTA Form submitted:', {
+      var submitBtn = ctaForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправка...'; }
+
+      sendLead({
+        form_type: 'CTA-форма — Медицина',
         name: nameField.value.trim(),
         phone: phoneField.value.trim(),
-        clinic_type: ctaForm.querySelector('[name="clinic_type"]').value,
-      });
-
-      window.location.href = '/thank-you';
+        clinic_type: (ctaForm.querySelector('[name="clinic_type"]') || {}).value || '',
+        up_website: (ctaForm.querySelector('[name="up_website"]') || {}).value || '',
+      }, '/thank-you');
     });
   }
 

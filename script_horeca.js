@@ -1,6 +1,33 @@
 (function () {
   'use strict';
 
+  function getUtmParams() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      utm_source: p.get('utm_source') || '',
+      utm_medium: p.get('utm_medium') || '',
+      utm_campaign: p.get('utm_campaign') || '',
+      utm_content: p.get('utm_content') || '',
+      utm_term: p.get('utm_term') || '',
+    };
+  }
+
+  function sendLead(payload, redirectTo) {
+    fetch('/api/send-telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({}, payload, getUtmParams(), {
+        page_url: window.location.href,
+        referrer: document.referrer || '',
+      })),
+      keepalive: true,
+    }).catch(function (err) {
+      console.error('Lead send failed:', err);
+    }).finally(function () {
+      window.location.href = redirectTo;
+    });
+  }
+
   // ===== HEADER SCROLL SHADOW =====
   var header = document.querySelector('.h-header');
   if (header) {
@@ -137,8 +164,16 @@
       }
       if (!valid) return;
 
-      console.log('HoReCa Quiz submitted:', { answers: answers, name: name.value.trim(), phone: phone.value.trim() });
-      window.location.href = '/thank_horeca';
+      var submitBtn = quizForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправка...'; }
+
+      sendLead({
+        form_type: 'Квиз — HoReCa',
+        name: name.value.trim(),
+        phone: phone.value.trim(),
+        answers: answers.slice(),
+        up_website: (quizForm.querySelector('[name="up_website"]') || {}).value || '',
+      }, '/thank_horeca');
     });
   }
 
@@ -179,8 +214,16 @@
       }
       if (!valid) return;
 
-      console.log('HoReCa CTA form:', { name: nameF.value.trim(), phone: phoneF.value.trim(), type: ctaForm.querySelector('[name="venue_type"]').value });
-      window.location.href = '/thank_horeca';
+      var submitBtn = ctaForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправка...'; }
+
+      sendLead({
+        form_type: 'CTA-форма — HoReCa',
+        name: nameF.value.trim(),
+        phone: phoneF.value.trim(),
+        venue_type: (ctaForm.querySelector('[name="venue_type"]') || {}).value || '',
+        up_website: (ctaForm.querySelector('[name="up_website"]') || {}).value || '',
+      }, '/thank_horeca');
     });
   }
 
